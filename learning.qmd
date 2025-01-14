@@ -1,0 +1,40 @@
+---
+title: "my_first_quarto"
+author: "Helene B. Thomsen"
+format: html
+---
+## My notes
+- Opened quarto (cmd+shit+p and search for quarto)
+- Table of content just for me (cmd+shit+p and search for outline)
+- Insert code chunk (cmd+shit+p and search for chunk, "Insert a new chunk code")
+- run line (ctrl + enter)
+
+## Basics of R
+```{r}
+1 + 1
+```
+
+
+## Setup code chunk
+"setup" is the label and "setup" is special because it is decoted that this chunk should be run first
+```{r setup}
+library(tidyverse)
+```
+## About me
+- Name: Helene
+- Title PhD student
+- Affiliation: SDCA
+3. Testing enumerate
+
+**I usually code in python**
+*I like to knit*
+
+___
+
+## Code chunk to mulitply
+```{r}
+3*3
+
+```
+
+
