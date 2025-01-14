@@ -1,5 +1,3 @@
-TODO: Add more to the title of your project here
-
 # day1_learningR_scientific_analysis_project_using_prodigenr:
 
 TODO: Give a brief description of what your project is about
