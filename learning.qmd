@@ -8,33 +8,27 @@ format: html
 - Table of content just for me (cmd+shit+p and search for outline)
 - Insert code chunk (cmd+shit+p and search for chunk, "Insert a new chunk code")
 - run line (ctrl + enter)
-
-## Basics of R
-```{r}
-1 + 1
-```
-
+- Zenodo is also a place with free datasets
 
 ## Setup code chunk
 "setup" is the label and "setup" is special because it is decoted that this chunk should be run first
 ```{r setup}
 library(tidyverse)
+# option + minus = <-
+# read_csv2 means to read semicolon seperated files like the python ,sep=;
+
+data_post_meal <- read_csv2(here::here("data/post-meal-insulin.csv"))
+
+
 ```
-## About me
-- Name: Helene
-- Title PhD student
-- Affiliation: SDCA
-3. Testing enumerate
 
-**I usually code in python**
-*I like to knit*
 
-___
-
-## Code chunk to mulitply
+## Showing the data
 ```{r}
-3*3
-
+data_post_meal
 ```
 
-## testing for Git B)
+```{r}
+glimpse(data_post_meal)
+```
+
