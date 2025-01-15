@@ -15,8 +15,12 @@ format: html
 ```{r setup}
 library(tidyverse)
 # option + minus = <-
-# read_csv2 means to read semicolon seperated files like the python ,sep=;
+# option + i = |
 
+#| message: false # removes message output from file
+#| warning: false # removes warnings from output file
+
+# read_csv2 means to read semicolon seperated files like the python ,sep=;
 data_post_meal <- read_csv2(here::here("data/post-meal-insulin.csv"))
 
 
