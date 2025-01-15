@@ -23,6 +23,9 @@ library(tidyverse)
 
 # read_csv2 means to read semicolon seperated files like the python ,sep=;
 data_post_meal <- read_csv2(here::here("data/post-meal-insulin.csv"))
+
+data_post_meal_small <- select(data_post_meal, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
+
 ```
 
 
@@ -101,3 +104,51 @@ ggplot(data_post_meal, aes(x=BMI, y=auc_pg)) +
 
 ## Pushing changes to remote
 ## pulling changes locally
+
+## Data wrangling
+### selecting data
+```{r}
+select(data_post_meal, Age, "BMI", Weight) # selecting columns
+
+select(data_post_meal, -Group) # removing the group column
+
+select(data_post_meal, starts_with("PG")) # all variables that start with PG has now been selected. We have not assigned this to anything yet.
+select(data_post_meal, ends_with("DXA"))
+
+select(data_post_meal, contains("0"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
