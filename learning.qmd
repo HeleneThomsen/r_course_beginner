@@ -9,6 +9,7 @@ format: html
 - Insert code chunk (cmd+shit+p and search for chunk, "Insert a new chunk code")
 - run line (ctrl + enter)
 - Zenodo is also a place with free datasets
+- To find help through console we can use "?geom_bar" to know something about geom_bar() function
 
 ## Setup code chunk
 "setup" is the label and "setup" is special because it is decoted that this chunk should be run first
@@ -22,17 +23,79 @@ library(tidyverse)
 
 # read_csv2 means to read semicolon seperated files like the python ,sep=;
 data_post_meal <- read_csv2(here::here("data/post-meal-insulin.csv"))
-
-
 ```
 
 
 ## Showing the data
 ```{r}
 data_post_meal
+# glimpse(data_post_meal)
 ```
 
 ```{r}
-glimpse(data_post_meal)
+#| fig-cap: "Distribution of BMI"
+#| label: fig-bmi-hist
+ggplot(data_post_meal, aes(x = BMI)) +
+  geom_histogram()
+```
+
+
+```{r}
+#| fig-cap: "Barplot: plotting one discrete variables"
+#| label: fig-bmi-bar
+ggplot(data_post_meal, aes(x = glykemi)) +
+  geom_bar()
+```
+
+```{r}
+# Group and glykemi are columns in the dataset
+data_post_meal |>
+  ggplot(aes(x = Group, fill = glykemi)) +
+  geom_bar()
+```
+```{r}
+# fixing abovementioned issue using as.charachter
+data_post_meal |>
+  ggplot(aes(x = Group, fill = as.character(glykemi))) +
+  geom_bar()
+```
+
+
+```{r}
+# position_dodge() is used for seperating the two columns
+data_post_meal |>
+  ggplot(aes(x = Group, fill = as.character(glykemi))) +
+  geom_bar(position = position_dodge())
+```
+
+
+## putting two plots side by side
+
+```{r side-by-side-figs}
+#| fig-cap: "BMI and glycemia, side by side plots"
+#| label: fig-bmi-glycemi
+#| fig-subcap:
+#| - "Distribution of BMI"
+#| - "Number of hyperglycemic participants"
+#| layout-ncol: 2
+
+ggplot(data_post_meal, aes(x = BMI)) +
+  geom_histogram()
+
+ggplot(data_post_meal, aes(x = glykemi)) +
+  geom_bar()
+```
+
+geom_point()
+geom_point()
+geom_smooth()
+
+## plotting two continuous variables
+```{r}
+#| fig-cap: "BMI agains auc of blood glucose"
+#| label: fig-two-continuous-varialbes
+ggplot(data_post_meal, aes(x=BMI, y=auc_pg)) +
+  geom_point() +
+  geom_smooth()
 ```
 
