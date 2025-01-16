@@ -28,8 +28,10 @@ data_post_meal_small <- select(data_post_meal, id, Age, BMI, Group, auc_pg, auc_
 
 
 data_post_meal_small_tidier <- data_post_meal_small |>
-  rename(auc_glucose = auc_pg,
-         auc_insulin = auc_ins) |>
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  ) |>
   filter(glykemi == 0) |>
   select(-glykemi)
 
@@ -109,7 +111,7 @@ geom_smooth()
 ```{r}
 #| fig-cap: "BMI agains auc of blood glucose"
 #| label: fig-two-continuous-varialbes
-ggplot(data_post_meal, aes(x=BMI, y=auc_pg)) +
+ggplot(data_post_meal, aes(x = BMI, y = auc_pg)) +
   geom_point() +
   geom_smooth()
 ```
@@ -133,8 +135,10 @@ select(data_post_meal, contains("0"))
 ## renaming columns
 ```{r}
 data_post_meal_small |>
-  rename(auc_glucose = auc_pg,
-         auc_insulin = auc_ins)
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  )
 ```
 
 
@@ -143,11 +147,11 @@ data_post_meal_small |>
 ### select and rename task
 ```{r}
 # Task 1.
- data_post_meal |>
+data_post_meal |>
   select(contains("OGTT"))
 # 13 columns
 
- 
+
 # Task 2.
 data_post_meal |>
   select(contains("..", -contains("..."))) |>
@@ -158,7 +162,7 @@ data_post_meal |>
 #     ___ = ___,
 #     ___ = ___
 #   )
-# 
+#
 # # Task 3.
 # basic_info <- select(post_meal_data, id, BMI, Length, Weight, Age)
 # rename(basic_info, Height = Length)
@@ -167,7 +171,7 @@ data_post_meal |>
 ## filtering data by row
 ```{r}
 data_post_meal_small |>
-  filter(glykemi == 1 )
+  filter(glykemi == 1)
 
 data_post_meal_small |>
   filter(BMI >= 25)
@@ -178,20 +182,22 @@ data_post_meal_small |>
 
 ```{r}
 data_post_meal_small |>
-  filter(Group == "CTR", BMI >=25) # both "," and "&" means AND
+  filter(Group == "CTR", BMI >= 25) # both "," and "&" means AND
 data_post_meal_small |>
-  filter(Group == "CTR" & BMI >=25)
+  filter(Group == "CTR" & BMI >= 25)
 
 data_post_meal_small |>
-  filter(Group == "CTR" | BMI >=25)
+  filter(Group == "CTR" | BMI >= 25)
 ```
 
 
 
 ```{r}
 data_post_meal_small_tidier <- data_post_meal_small |>
-  rename(auc_glucose = auc_pg,
-         auc_insulin = auc_ins) |>
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  ) |>
   filter(glykemi == 0) |>
   select(-glykemi)
 ```
@@ -201,8 +207,10 @@ data_post_meal_small_tidier <- data_post_meal_small |>
 ## Modify or add column
 ```{r}
 data_post_meal_small_tidier |>
-  mutate(insulin_glucose_ratio = auc_insulin/auc_glucose,
-         Group = if_else(Group=="CTR", "Control", "First-degree relative"))
+  mutate(
+    insulin_glucose_ratio = auc_insulin / auc_glucose,
+    Group = if_else(Group == "CTR", "Control", "First-degree relative")
+  )
 ```
 
 ## task 11.9
@@ -227,11 +235,8 @@ data_post_meal |>
 # task 2
 
 data_post_meal |>
-  mutate(percent_body_fat = ((Fat.mass.DXA/Weight)*100)) |>
-  filter(percent_body_fat>30)
-  
-
-
+  mutate(percent_body_fat = ((Fat.mass.DXA / Weight) * 100)) |>
+  filter(percent_body_fat > 30)
 ```
 
 
@@ -240,8 +245,8 @@ data_post_meal |>
 
 ```{r}
 data_post_meal_small_tidied |>
-  mutate(overweight = if_else(BMI >= 25,"overweight","Not overweight")) |>
-  ggplot(aes(x=overweight, y = insulin_glucose_ratio))+
+  mutate(overweight = if_else(BMI >= 25, "overweight", "Not overweight")) |>
+  ggplot(aes(x = overweight, y = insulin_glucose_ratio)) +
   geom_jitter()
 ```
 
@@ -250,21 +255,21 @@ data_post_meal_small_tidied |>
 ```{r}
 data_post_meal_small_tidied |>
   filter(BMI < 30) |>
-  ggplot(aes(x=Age, y=auc_insulin, colour=Group,)) +
+  ggplot(aes(x = Age, y = auc_insulin, colour = Group, )) +
   geom_point()
 ```
 
 ```{r}
 data_post_meal_small_tidied |>
   filter(BMI < 30) |>
-  mutate(young = if_else(Age<40, "Young", "Old")) |>
-  ggplot(aes(x=BMI, y=insulin_glucose_ratio, colour = Group)) +
+  mutate(young = if_else(Age < 40, "Young", "Old")) |>
+  ggplot(aes(x = BMI, y = insulin_glucose_ratio, colour = Group)) +
   geom_point() +
-  facet_grid(rows = vars(young))+
-  labs(x="Body Mass Index (BMI) [kg/m^2]",
-       y="Insulin to Glucose ratio")
-
-
+  facet_grid(rows = vars(young)) +
+  labs(
+    x = "Body Mass Index (BMI) [kg/m^2]",
+    y = "Insulin to Glucose ratio"
+  )
 ```
 # Exercise 12.4
 ## Make multi-dimensional plots!
@@ -278,10 +283,10 @@ data_post_meal_small_tidied |>
 
 data_post_meal |>
   mutate(
-    percent_body_fat = Fat.mass.DXA/Weight*100,
-    young = if_else(BMI<= 40, "Young", "Old")
+    percent_body_fat = Fat.mass.DXA / Weight * 100,
+    young = if_else(BMI <= 40, "Young", "Old")
   ) |>
-  ggplot(aes(x = Group, y = percent_body_fat, colour(young)))+
+  ggplot(aes(x = Group, y = percent_body_fat, colour(young))) +
   geom_jitter(width = 0.2) # width is to make the points cluster a bit more together
 
 # task 2
@@ -290,11 +295,10 @@ data_post_meal |>
     insulin_glucose_ratio = (auc_ins / auc_pg),
     insulin_insensitive = if_else(insulin_glucose_ratio > mean(insulin_glucose_ratio), "Insensitive", "Sensitive")
   ) |>
-  ggplot(aes(x=BMI, y=Bone.mineral.DXA, colour(insulin_insensitive)))+
+  ggplot(aes(x = BMI, y = Bone.mineral.DXA, colour(insulin_insensitive))) +
   geom_point() +
   geom_smooth() +
   facet_grid(cols = vars(insulin_insensitive))
-  
 ```
 
 # Exercise 12.6
@@ -305,7 +309,7 @@ data_post_meal |>
 ```{r}
 # Tasks 1. and 2.
 data_post_meal |>
-  mutate(hyperglycemia = if_else(glykemi==1, "Yes", "No")) |>
+  mutate(hyperglycemia = if_else(glykemi == 1, "Yes", "No")) |>
   ggplot(aes(x = Group, fill = hyperglycemia)) +
   geom_bar(position = position_dodge()) +
   geom_bar(position = position_dodge()) +
@@ -315,29 +319,32 @@ data_post_meal |>
 data_post_meal |>
   ggplot(aes(x = auc_pg, y = auc_ins, colour = BMI)) +
   geom_point() +
-  #scale_fill_viridis_c() # d for discrete and c for continuous in the function name
+  # scale_fill_viridis_c() # d for discrete and c for continuous in the function name
   scale_colour_viridis_c(option = "inferno")
-
 ```
 
 
 
 
+## calculating summary statistics
+
+```{r}
+data_post_meal_small_tidied |>
+  summarise(
+    max_bmi = max(BMI),
+    min_bmi = min(BMI)
+  )
+```
 
 
+## summarize with split
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```{r}
+data_post_meal_small_tidied |>
+  group_by(Group) |>
+  summarise(
+    mean_age = mean(Age),
+    mean_bmi = mean(BMI)
+  ) |>
+  ungroup()
+```
