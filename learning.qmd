@@ -26,6 +26,13 @@ data_post_meal <- read_csv2(here::here("data/post-meal-insulin.csv"))
 
 data_post_meal_small <- select(data_post_meal, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
 
+
+data_post_meal_small_tidier <- data_post_meal_small |>
+  rename(auc_glucose = auc_pg,
+         auc_insulin = auc_ins) |>
+  filter(glykemi == 0) |>
+  select(-glykemi)
+
 ```
 
 
@@ -127,12 +134,71 @@ data_post_meal_small |>
 
 
 
+## excercise 11.6
+### select and rename task
+```{r}
+# Task 1.
+ data_post_meal |>
+  select(contains("OGTT"))
+# 13 columns
+
+ 
+# Task 2.
+data_post_meal |>
+  select(contains("..", -contains("..."))) |>
+  rename(Insulin_minus_5_OGTT = Insulin..5.OGTT.X) |>
+  rename(P_Glucose_minus_5_OGTT = P.Glucose..5.OGTT)
+# post_meal_data |>
+#   ___(
+#     ___ = ___,
+#     ___ = ___
+#   )
+# 
+# # Task 3.
+# basic_info <- select(post_meal_data, id, BMI, Length, Weight, Age)
+# rename(basic_info, Height = Length)
+```
+
+## filtering data by row
+```{r}
+data_post_meal_small |>
+  filter(glykemi == 1 )
+
+data_post_meal_small |>
+  filter(BMI >= 25)
+
+data_post_meal_small |>
+  filter(Group == "CTR")
+```
+
+```{r}
+data_post_meal_small |>
+  filter(Group == "CTR", BMI >=25) # both "," and "&" means AND
+data_post_meal_small |>
+  filter(Group == "CTR" & BMI >=25)
+
+data_post_meal_small |>
+  filter(Group == "CTR" | BMI >=25)
+```
 
 
 
+```{r}
+data_post_meal_small_tidier <- data_post_meal_small |>
+  rename(auc_glucose = auc_pg,
+         auc_insulin = auc_ins) |>
+  filter(glykemi == 0) |>
+  select(-glykemi)
+```
 
 
-
+# Day 3
+## Modify or column
+```{r}
+data_post_meal_small_tidier |>
+  mutate(insulin_glucose_ratio = auc_insulin/auc_glucose,
+         Group = if_else(Group=="CTR", "Control", "First-degree relative"))
+```
 
 
 
